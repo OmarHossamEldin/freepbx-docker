@@ -27,92 +27,13 @@ The goal is to build this local development environment:
           Softphone 1          Softphone 2
 ```
 
-The final test will be:
 
-```text
-1001  ────────────────►  1002
-       SIP + RTP audio
-```
-
----
-
-# 1. Check Docker
-
-From your Ubuntu machine:
-
-```bash
-docker --version
-```
-
-Then:
-
-```bash
-docker compose version
-```
-
-You should get Docker and Docker Compose versions.
-
-Check that Docker is running:
-
-```bash
-sudo systemctl status docker
-```
-
-If necessary:
-
-```bash
-sudo systemctl enable --now docker
-```
-
----
-
-# 2. Go to the FreePBX Docker Project
-
-Go to your project:
-
-```bash
-cd ~/bevatel/voip/free-pbx
-```
-
-If you cloned the Docker project into a subdirectory:
-
-```bash
-cd ~/bevatel/voip/free-pbx/freepbx-docker
-```
-
-Check the files:
-
-```bash
-ls
-```
-
-You should see the project's Docker/Compose files.
-
----
-
-# 3. Start FreePBX
-
-Start the environment using the project's installation/startup procedure.
-
-For the Docker project discussed previously:
-
-```bash
-sudo bash run.sh
-```
 
 Wait for the initial installation to finish.
 
 The first installation can take considerably longer than subsequent starts because the image and FreePBX components need to be prepared.
 
 ---
-
-# 4. Check Containers
-
-Run:
-
-```bash
-sudo docker compose ps
-```
 
 Make sure the FreePBX container and database container are running.
 
@@ -180,21 +101,8 @@ Replace `192.168.1.50` with your actual Ubuntu IP.
 
 You should reach the FreePBX web interface.
 
-If the browser cannot connect, check:
 
-```bash
-sudo docker compose ps
-```
-
-Then check:
-
-```bash
-sudo docker compose logs --tail=100 freepbx
-```
-
----
-
-# 7. Create Extension 1001
+# 1. Create Extension 1001
 
 In FreePBX:
 
@@ -243,7 +151,7 @@ Apply Config
 
 ---
 
-# 8. Create Extension 1002
+# 2. Create Extension 1002
 
 Create another PJSIP extension:
 
@@ -285,7 +193,7 @@ Now you have:
 
 ---
 
-# 9. Verify the Extensions from Asterisk
+# 3. Verify the Extensions from Asterisk
 
 Open the Asterisk CLI:
 
@@ -321,7 +229,7 @@ exit
 
 ---
 
-# 10. Configure Softphone 1
+# 4. Configure Softphone 1
 
 You can use Linphone, MicroSIP, Zoiper, or another SIP client.
 
@@ -360,7 +268,7 @@ The SIP account is not an HTTP account.
 
 ---
 
-# 11. Configure Softphone 2
+# 5. Configure Softphone 2
 
 Configure the second softphone:
 
@@ -389,7 +297,7 @@ sip:1002@192.168.1.50
 
 ---
 
-# 12. Check SIP Registration
+# 6. Check SIP Registration
 
 On Ubuntu:
 
@@ -414,7 +322,7 @@ The endpoints should show as available/registered once the softphones successful
 
 ---
 
-# 13. Test Extension 1001
+# 7. Test Extension 1001
 
 On softphone 1, verify that the account is registered.
 
@@ -432,7 +340,7 @@ The account is:
 
 ---
 
-# 14. Test Extension 1002
+# 8. Test Extension 1002
 
 On softphone 2, verify:
 
@@ -462,7 +370,7 @@ Softphone 2
 
 ---
 
-# 15. Make the First Call
+# 9. Make the First Call
 
 From softphone 1:
 
@@ -501,7 +409,7 @@ You should now have two-way audio.
 
 ---
 
-# 16. Understand SIP vs RTP
+# 10. Understand SIP vs RTP
 
 This distinction is very important for your VoIP development.
 
@@ -554,7 +462,7 @@ Call connects but no audio
 
 ---
 
-# 17. Check RTP Configuration
+# 11. Check RTP Configuration
 
 Run:
 
@@ -576,7 +484,7 @@ The exact range should match the configuration used by your Docker FreePBX proje
 
 ---
 
-# 18. SIP Debugging
+# 12. SIP Debugging
 
 If the softphone doesn't register, enter Asterisk:
 
@@ -617,7 +525,7 @@ exit
 
 ---
 
-# 19. Check Endpoint 1001
+# 13. Check Endpoint 1001
 
 Run:
 
@@ -635,7 +543,7 @@ sudo docker compose exec freepbx asterisk -rx "pjsip show endpoint 1002"
 
 ---
 
-# 20. Check Contacts
+# 14. Check Contacts
 
 Run:
 
@@ -654,7 +562,7 @@ The exact output depends on the softphone.
 
 ---
 
-# 21. If the Softphone Cannot Register
+# 15. If the Softphone Cannot Register
 
 Check that port 5060 is listening/exposed:
 
@@ -686,7 +594,7 @@ between the Ubuntu host and FreePBX container.
 
 ---
 
-# 22. Check the Ubuntu Firewall
+# 16. Check the Ubuntu Firewall
 
 If UFW is enabled:
 
@@ -712,7 +620,7 @@ Only expose these ports where appropriate. For a local-only development PBX, avo
 
 ---
 
-# 23. If the Call Connects but There Is No Audio
+# 17. If the Call Connects but There Is No Audio
 
 First check:
 
@@ -751,7 +659,7 @@ Do not start with phones behind different NATs.
 
 ---
 
-# 24. Test DTMF
+# 18. Test DTMF
 
 After audio works, test DTMF.
 
@@ -786,7 +694,7 @@ IVR
 
 ---
 
-# 25. Test Hangup
+# 19. Test Hangup
 
 From 1001:
 
@@ -817,7 +725,7 @@ pjsip set logger on
 
 ---
 
-# 26. Test Call History
+# 20. Test Call History
 
 Once calls work, check FreePBX's CDR.
 
@@ -842,7 +750,7 @@ This is particularly important for your future PHP application.
 
 ---
 
-# 27. Your PHP Application Comes After This
+# 21. Your PHP Application Comes After This
 
 Do not initially make PHP control SIP.
 
@@ -898,7 +806,7 @@ Application/business logic
 
 ---
 
-# 28. Final Working Test
+# 22. Final Working Test
 
 Your first milestone is complete when this works:
 
